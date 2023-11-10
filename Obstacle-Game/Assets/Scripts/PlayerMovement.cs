@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public float forwardForce = 800f;
-    public float sidewaysForce = 700f;
+    public float sidewaysForce = 100f;
     public new Rigidbody rigidbody;
     // Start is called before the first frame update
     void Start()
@@ -21,11 +21,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey("d"))
         {
-            rigidbody.AddForce(sidewaysForce * Time.deltaTime, 0, 0);
+            rigidbody.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
         if (Input.GetKey("a"))
         {
-            rigidbody.AddForce(-sidewaysForce * Time.deltaTime, 0, 0);
+            rigidbody.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+        }
+        
+        if (rigidbody.position.y < -1f)
+        {
+            FindObjectOfType<GameManager>().EndGame();
         }
     }
 }
